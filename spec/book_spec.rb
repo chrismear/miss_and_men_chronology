@@ -9,7 +9,6 @@ RSpec.describe Book do
   let(:book_with_one_change) {
     described_class.new(
       'Example book',
-      characters: Character['Example character'],
       changes: {
         Character['Example character'] =>
           Attribute[:example_attribute].changes(from: :start, to: :finish)
@@ -19,7 +18,6 @@ RSpec.describe Book do
   let(:book_with_multiple_changes) {
     described_class.new(
       'Example book',
-      characters: Character['Example character'],
       changes: {
         Character['Example character'] =>
           Attribute[:example_attribute].changes(from: :start, to: :finish),
@@ -30,9 +28,7 @@ RSpec.describe Book do
   }
   let(:book_with_no_changes) {
     described_class.new(
-      'Example book',
-      characters: [Character['Example character'],
-                   Character['Another character']]
+      'Example book'
     )
   }
   let(:book_with_no_characters) {
@@ -43,9 +39,6 @@ RSpec.describe Book do
   let(:book_with_multiple_characters_changing) {
     described_class.new(
       'Example book',
-      characters: [Character['Example character'],
-                   Character['Another character'],
-                   Character['Unchanged character']],
       changes: {
         Character['Example character'] =>
           Attribute[:example_attribute].changes(from: :start, to: :finish),

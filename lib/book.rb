@@ -4,9 +4,8 @@
 class Book
   attr_accessor :title
 
-  def initialize(title, characters: [], changes: {}, appearances: {})
+  def initialize(title, changes: {}, appearances: {})
     @title = title
-    @characters = Array(characters)
     @changes = changes.transform_values { |character_changes|
       Array(character_changes)
     }

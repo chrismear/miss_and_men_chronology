@@ -28,13 +28,13 @@ class Ordering
     @explanations.compact
   end
 
-  def to_image
+  def to_image(filename = 'order')
     order
     graph = GraphViz.new(:G, type: :digraph)
     @sets.each do |set|
       set.to_image(graph)
     end
-    graph.output(png: "order-#{Time.now.iso8601}.png")
+    graph.output(png: "#{filename}-#{Time.now.iso8601}.png")
   end
 
   private

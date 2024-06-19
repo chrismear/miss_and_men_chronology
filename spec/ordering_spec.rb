@@ -11,7 +11,6 @@ RSpec.describe Ordering do
       [
         Book.new(
           'Mr Greedy',
-          characters: Character['Mr Greedy'],
           changes: {
             Character['Mr Greedy'] =>
               Attribute[:fatness].changes(from: :fat, to: :thin)
@@ -34,7 +33,6 @@ RSpec.describe Ordering do
     let(:greedy) {
       Book.new(
         'Mr Greedy',
-        characters: Character['Mr Greedy'],
         changes: {
           Character['Mr Greedy'] =>
             Attribute[:fatness].changes(from: :fat, to: :thin)
@@ -44,7 +42,6 @@ RSpec.describe Ordering do
     let(:busy) {
       Book.new(
         'Little Miss Busy',
-        characters: Character['Mr Greedy'],
         appearances: {
           Character['Mr Greedy'] => Attribute[:fatness].is(:fat)
         }
@@ -76,7 +73,6 @@ RSpec.describe Ordering do
     let(:greedy) {
       Book.new(
         'Mr Greedy',
-        characters: Character['Mr Greedy'],
         changes: {
           Character['Mr Greedy'] =>
             Attribute[:fatness].changes(from: :fat, to: :thin)
@@ -86,7 +82,6 @@ RSpec.describe Ordering do
     let(:busy) {
       Book.new(
         'Little Miss Busy',
-        characters: Character['Mr Greedy'],
         appearances: {
           Character['Mr Greedy'] => Attribute[:fatness].is(:fat)
         }
@@ -95,7 +90,6 @@ RSpec.describe Ordering do
     let(:nosy) {
       Book.new(
         'Mr Nosy',
-        characters: Character['Mr Nosy'],
         changes: {
           Character['Mr Nosy'] =>
             Attribute[:nosiness].changes(from: :nosy, to: :not_nosy)
@@ -105,11 +99,6 @@ RSpec.describe Ordering do
     let(:twins) {
       Book.new(
         'Little Miss Twins',
-        characters: [
-          Character['Little Miss Twins 1'],
-          Character['Little Miss Twins 2'],
-          Character['Mr Nosy']
-        ],
         appearances: {
           Character['Mr Nosy'] => Attribute[:nosiness].is(:nosy)
         }
@@ -118,7 +107,6 @@ RSpec.describe Ordering do
     let(:nosy_two) {
       Book.new(
         'Mr Nosy Part Two',
-        characters: Character['Mr Nosy'],
         appearances: {
           Character['Mr Nosy'] => Attribute[:nosiness].is(:nosy)
         }
@@ -147,31 +135,31 @@ RSpec.describe Ordering do
 
   context 'when there is a cyclic graph' do
     let(:book_one) {
-      Book.new('One', characters: Character['Mr Man'],
-                      changes: {
-                        Character['Mr Man'] =>
-                        Attribute[:weirdness].changes(
-                          from: :not_weird, to: :slightly_weird
-                        )
-                      })
+      Book.new('One',
+               changes: {
+                 Character['Mr Man'] =>
+                 Attribute[:weirdness].changes(
+                   from: :not_weird, to: :slightly_weird
+                 )
+               })
     }
     let(:book_two) {
-      Book.new('Two', characters: Character['Mr Man'],
-                      changes: {
-                        Character['Mr Man'] =>
-                        Attribute[:weirdness].changes(
-                          from: :slightly_weird, to: :very_weird
-                        )
-                      })
+      Book.new('Two',
+               changes: {
+                 Character['Mr Man'] =>
+                 Attribute[:weirdness].changes(
+                   from: :slightly_weird, to: :very_weird
+                 )
+               })
     }
     let(:book_three) {
-      Book.new('Three', characters: Character['Mr Man'],
-                        changes: {
-                          Character['Mr Man'] =>
-                          Attribute[:weirdness].changes(
-                            from: :very_weird, to: :not_weird
-                          )
-                        })
+      Book.new('Three',
+               changes: {
+                 Character['Mr Man'] =>
+                 Attribute[:weirdness].changes(
+                   from: :very_weird, to: :not_weird
+                 )
+               })
     }
 
     let(:books) { [book_one, book_two, book_three] }
