@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Represents an set of books in either a directed or cyclic graph.
+# rubocop:todo Metrics/ClassLength
 class BookSet
   class << self
     def construct(&)
@@ -114,6 +115,33 @@ class BookSet
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
 
+  # Returns true if there is a cycle in the graph.
+  # rubocop:todo Metrics/MethodLength
+  # rubocop:todo Metrics/AbcSize
+  def cycle?
+    depth_first_search = lambda do |vertex, visited, stack|
+      visited[vertex] = true
+      stack[vertex] = true
+      @graph[vertex].each do |destination|
+        return true if stack[destination]
+        next if visited[destination]
+
+        return true if depth_first_search.call(destination, visited, stack)
+      end
+      stack[vertex] = false
+      false
+    end
+
+    visited = Hash.new(false)
+    stack = Hash.new(false)
+    @graph.each_key do |vertex|
+      return true if depth_first_search.call(vertex, visited, stack)
+    end
+    false
+  end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
+
   # Thin wrapper around a Book in a BookSet to add helper methods relating to
   # its position in the graph.
   class BookProxy
@@ -131,3 +159,4 @@ class BookSet
     attr_accessor :book
   end
 end
+# rubocop:enable Metrics/ClassLength

@@ -15,8 +15,7 @@ class Ordering
     @explanations = []
 
     sets += standalone_books
-    sets += directed_graphs
-    sets += cyclic_graphs
+    sets += graphs
 
     @sets = sets.compact
   end
@@ -40,8 +39,8 @@ class Ordering
   end
 
   # rubocop:todo Metrics/MethodLength
-  def directed_graphs
-    @directed_graphs ||=
+  def graphs
+    @graphs ||=
       BookSet.construct do |set| # rubocop:disable Style/BlockDelimiters
         @books.select(&:changes?).each do |book_with_changes|
           (@books - [book_with_changes]).each do |potential_predecessor|
@@ -58,20 +57,7 @@ class Ordering
   end
   # rubocop:enable Metrics/MethodLength
 
-  def cyclic_graphs
-    []
-  end
-
-  # Returns true if the books is in either the directed graphs or the cyclic
-  # graphs.
   def in_graphs?(book)
-    found_in_graphs = false
-    directed_graphs.each do |graph|
-      found_in_graphs ||= graph.books.include?(book)
-    end
-    cyclic_graphs.each do |graph|
-      found_in_graphs ||= graph.books.include?(book)
-    end
-    found_in_graphs
+    graphs.any? { |graph| graph.books.include?(book) }
   end
 end

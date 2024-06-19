@@ -64,7 +64,7 @@ RSpec.describe Ordering do
     end
   end
 
-  context 'when there is a complex, multi-graph ordering' do
+  context 'when there is a complex, multi-graph ordering that is non-cyclic' do
     let(:greedy) {
       Book.new(
         'Mr Greedy',
@@ -120,6 +120,49 @@ RSpec.describe Ordering do
     it 'finds two separate graphs' do
       expect(described_class.new([greedy, busy, nosy, twins,
                                   nosy_two]).order.size).to eq(2)
+    end
+
+    it 'finds no cycles' do
+      expect(
+        described_class.new([greedy, busy, nosy, twins, nosy_two]).
+          order.all? { |set| !set.cycle? }
+      ).to be true
+    end
+  end
+
+  context 'when there is a cyclic graph' do
+    let(:book_one) {
+      Book.new('One', characters: Character['Mr Man'],
+                      changes: {
+                        Character['Mr Man'] =>
+                        Attribute[:weirdness].changes(
+                          from: :not_weird, to: :slightly_weird
+                        )
+                      })
+    }
+    let(:book_two) {
+      Book.new('Two', characters: Character['Mr Man'],
+                      changes: {
+                        Character['Mr Man'] =>
+                        Attribute[:weirdness].changes(
+                          from: :slightly_weird, to: :very_weird
+                        )
+                      })
+    }
+    let(:book_three) {
+      Book.new('Three', characters: Character['Mr Man'],
+                        changes: {
+                          Character['Mr Man'] =>
+                          Attribute[:weirdness].changes(
+                            from: :very_weird, to: :not_weird
+                          )
+                        })
+    }
+
+    let(:books) { [book_one, book_two, book_three] }
+
+    it 'finds the cycle' do
+      expect(described_class.new(books).order.first.cycle?).to be true
     end
   end
 end
