@@ -1,3 +1,7 @@
 spec/examples.txt
+
 output/*.png
+# Allow the canonical output example
+!output/little-miss-and-mr-men-ordering.png
+
 .DS_Store
