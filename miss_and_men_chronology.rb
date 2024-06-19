@@ -13,4 +13,4 @@ books.push Book.new(
   }
 )
 
-Ordering.new(books).to_image('mr-men-and-little-miss-ordering')
+Ordering.new(books).to_image('little-miss-and-mr-men-ordering')

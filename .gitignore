@@ -1,3 +1,2 @@
 spec/examples.txt
-/order*.png
-/mr-men-and-little-miss-ordering*.png
+output/*.png
