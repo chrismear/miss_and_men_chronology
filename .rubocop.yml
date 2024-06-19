@@ -15,3 +15,5 @@ Layout/DotPosition:
   EnforcedStyle: trailing
 Layout/LineLength:
   Max: 80
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
