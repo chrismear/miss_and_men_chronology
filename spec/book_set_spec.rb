@@ -63,4 +63,18 @@ RSpec.describe BookSet do
                                                          ])
     end
   end
+
+  describe '#flat_order' do
+    let(:directed_set) {
+      described_class.construct do |set|
+        set.add(greedy)
+        set.add(busy, must_precede: greedy)
+        set.add(funny, must_precede: greedy)
+      end
+    }
+
+    it 'collapses a directed graph into a flat list' do
+      expect(directed_set.flat_order).to eq([funny, busy, greedy])
+    end
+  end
 end

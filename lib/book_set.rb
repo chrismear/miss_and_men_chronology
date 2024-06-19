@@ -77,6 +77,34 @@ class BookSet
     @graph[book].any? { |destination| precedes?(destination, other) }
   end
 
+  # Collapses a graph into a flat list that retains the correct ordering.
+  # rubocop:todo Metrics/MethodLength
+  # rubocop:todo Metrics/AbcSize
+  def flat_order
+    depth_first_search = lambda do |vertex, visited, stack|
+      visited[vertex] = true
+      @graph[vertex].each do |destination|
+        unless visited[destination]
+          depth_first_search.call(destination, visited,
+                                  stack)
+        end
+      end
+      stack << vertex
+    end
+
+    stack = []
+    visited = Hash.new(false)
+    @graph.each_key do |vertex|
+      depth_first_search.call(vertex, visited, stack) unless visited[vertex]
+    end
+
+    sorted = []
+    sorted << stack.pop until stack.empty?
+    sorted
+  end
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
+
   # Thin wrapper around a Book in a BookSet to add helper methods relating to
   # its position in the graph.
   class BookProxy
