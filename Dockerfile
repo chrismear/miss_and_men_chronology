@@ -8,11 +8,11 @@ RUN bundle config --global frozen 1
 # install GraphViz
 RUN apt-get update -qq && apt-get install -y build-essential graphviz
 
-WORKDIR /app
-COPY . /app
-
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
+
+WORKDIR /app
+COPY . /app
 
 CMD ["ruby", "miss_and_men_chronology.rb"]
 
