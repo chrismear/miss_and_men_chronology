@@ -77,6 +77,15 @@ class BookSet
     @graph[book].any? { |destination| precedes?(destination, other) }
   end
 
+  def inspect
+    result = ''.dup
+    @graph.each do |book, destinations|
+      result << "#{book.title} -> #{destinations.map(&:title).join(', ')}\n"
+    end
+    result << flat_order.map(&:title).join(' -> ')
+    result
+  end
+
   # Collapses a graph into a flat list that retains the correct ordering.
   # rubocop:todo Metrics/MethodLength
   # rubocop:todo Metrics/AbcSize
