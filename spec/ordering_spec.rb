@@ -69,6 +69,31 @@ RSpec.describe Ordering do
     end
   end
 
+  context 'when a character appears in another book after their change' do
+    let(:books) {
+      [
+        Book.new(
+          'Mr Greedy',
+          changes: {
+            Character['Mr Greedy'] =>
+              Attribute[:fatness].changes(from: :fat, to: :thin)
+          }
+        ),
+        Book.new(
+          'Imaginary Book',
+          appearances: {
+            Character['Mr Greedy'] => Attribute[:fatness].is(:thin)
+          }
+        )
+      ]
+    }
+
+    it 'finds the order' do
+      expect(described_class.new(books).order.first.flat_order.map(&:title)).
+        to eq(['Mr Greedy', 'Imaginary Book'])
+    end
+  end
+
   context 'when there is a complex, multi-graph ordering that is non-cyclic' do
     let(:greedy) {
       Book.new(

@@ -53,15 +53,14 @@ class Ordering
   def graphs
     @graphs ||=
       BookSet.construct do |set| # rubocop:disable Style/BlockDelimiters
-        @books.select(&:changes?).each do |book_with_changes|
-          (@books - [book_with_changes]).each do |potential_predecessor|
-            next unless potential_predecessor.must_precede?(book_with_changes)
+        @books.each do |book|
+          (@books - [book]).each do |potential_predecessor|
+            next unless potential_predecessor.must_precede?(book)
 
             new_explanations =
               potential_predecessor.
-              explanations_for_preceding(book_with_changes)
-
-            set.add(potential_predecessor, must_precede: book_with_changes,
+              explanations_for_preceding(book)
+            set.add(potential_predecessor, must_precede: book,
                                            explanations: new_explanations)
             @explanations.concat(new_explanations)
           end
