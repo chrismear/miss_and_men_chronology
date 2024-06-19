@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative 'book_set'
+require 'graphviz'
+require 'time'
 
 # Calculates the chronological order of the books in the series.
 class Ordering
@@ -26,6 +28,15 @@ class Ordering
     @explanations.compact
   end
 
+  def to_image
+    order
+    graph = GraphViz.new(:G, type: :digraph)
+    @sets.each do |set|
+      set.to_image(graph)
+    end
+    graph.output(png: "order-#{Time.now.iso8601}.png")
+  end
+
   private
 
   def standalone_books
@@ -46,11 +57,13 @@ class Ordering
           (@books - [book_with_changes]).each do |potential_predecessor|
             next unless potential_predecessor.must_precede?(book_with_changes)
 
-            @explanations +=
+            new_explanations =
               potential_predecessor.
               explanations_for_preceding(book_with_changes)
 
-            set.add(potential_predecessor, must_precede: book_with_changes)
+            set.add(potential_predecessor, must_precede: book_with_changes,
+                                           explanations: new_explanations)
+            @explanations.concat(new_explanations)
           end
         end
       end.disconnected_graphs

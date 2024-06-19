@@ -24,6 +24,10 @@ RSpec.describe Ordering do
       expect(described_class.new(books).order.first.map(&:title)).
         to eq(['Mr Greedy'])
     end
+
+    it 'outputs a graph image' do
+      expect { described_class.new(books).to_image }.not_to raise_error
+    end
   end
 
   context 'when there are two books with one character change' do
@@ -61,6 +65,10 @@ RSpec.describe Ordering do
         'changes from fat to thin in Mr Greedy, but appears as fat in ' \
         'Little Miss Busy.'
       )
+    end
+
+    it 'outputs a graph image' do
+      expect { described_class.new(books).to_image }.not_to raise_error
     end
   end
 
@@ -128,6 +136,13 @@ RSpec.describe Ordering do
           order.all? { |set| !set.cycle? }
       ).to be true
     end
+
+    it 'outputs a graph image' do
+      expect {
+        described_class.new([greedy, busy, nosy, twins,
+                             nosy_two]).to_image
+      }.not_to raise_error
+    end
   end
 
   context 'when there is a cyclic graph' do
@@ -163,6 +178,10 @@ RSpec.describe Ordering do
 
     it 'finds the cycle' do
       expect(described_class.new(books).order.first.cycle?).to be true
+    end
+
+    it 'outputs a graph image' do
+      expect { described_class.new(books).to_image }.not_to raise_error
     end
   end
 end

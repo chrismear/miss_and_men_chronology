@@ -9,16 +9,21 @@ class BookSet
     end
   end
 
-  def initialize(graph: {})
+  def initialize(graph: {}, explanations: {})
     # Adjacency list representation of a directed graph, possibly cyclic.
     @graph = graph
+
+    @explanations = explanations
   end
 
-  def add(book, must_precede: [])
+  def add(book, must_precede: [], explanations: [])
     must_precede = Array(must_precede)
+    explanations = Array(explanations)
 
     must_precede.each do |successor|
       @graph[successor] ||= []
+
+      store_explanations(book, successor, explanations)
     end
 
     @graph[book] ||= []
@@ -65,7 +70,7 @@ class BookSet
   def subgraphs_from_subgroups(subgroups)
     subgroups.map { |books|
       new_graph = @graph.select { |book, _destinations| books.include?(book) }
-      self.class.new(graph: new_graph)
+      self.class.new(graph: new_graph, explanations:)
     }
   end
 
@@ -156,6 +161,27 @@ class BookSet
     cycles
   end
 
+  # rubocop:todo Metrics/MethodLength
+  # rubocop:todo Metrics/AbcSize
+  def to_image(graph)
+    nodes_by_book = {}
+    @graph.each do |book, destinations|
+      nodes_by_book[book] ||= graph.add_nodes(book.title)
+      destinations.each do |destination|
+        nodes_by_book[destination] ||= graph.add_nodes(destination.title)
+        explanation = (explanations.dig(book, destination) || []).join(' and ')
+        if explanation.empty?
+          graph.add_edge(nodes_by_book[book], nodes_by_book[destination])
+        else
+          graph.add_edge(nodes_by_book[book], nodes_by_book[destination],
+                         label: explanation)
+        end
+      end
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
+
   private
 
   # rubocop:todo Metrics/MethodLength
@@ -177,6 +203,17 @@ class BookSet
     nil
   end
   # rubocop:enable Metrics/MethodLength
+
+  def store_explanations(book, successor, new_explanations)
+    @explanations ||= {}
+    @explanations[book] ||= {}
+    @explanations[book][successor] ||= []
+    @explanations[book][successor].concat(new_explanations)
+  end
+
+  def explanations
+    @explanations ||= {}
+  end
 
   # Thin wrapper around a Book in a BookSet to add helper methods relating to
   # its position in the graph.
