@@ -7,6 +7,8 @@ instead of fat. However, in other books, the same characters appear as they were
 _before_ their change. This implies a chronological ordering of the entire book
 series, which is what this program aims to calculate.
 
+![Graph of the Little Miss and Mr Men books](output/little-miss-and-mr-men-ordering.png)
+
 ## Installation and usage
 
 To run the program using Docker, follow these steps:
