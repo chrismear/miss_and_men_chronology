@@ -142,6 +142,42 @@ class BookSet
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
 
+  # Returns an array of cycles, with each cycle being the minimal ordered set of
+  # books that form a cycle.
+  def cycles
+    cycles = []
+    visited = {}
+    @graph.each_key do |vertex|
+      next if visited.key?(vertex)
+
+      cycle = find_cycle(vertex, visited)
+      cycles << cycle if cycle
+    end
+    cycles
+  end
+
+  private
+
+  # rubocop:todo Metrics/MethodLength
+  def find_cycle(vertex, visited, stack = [])
+    return nil if visited[vertex]
+
+    visited[vertex] = true
+    stack << vertex
+    @graph[vertex].each do |destination|
+      if stack.include?(destination)
+        start = stack.index(destination)
+        return stack[start..]
+      end
+
+      cycle = find_cycle(destination, visited, stack)
+      return cycle if cycle
+    end
+    stack.pop
+    nil
+  end
+  # rubocop:enable Metrics/MethodLength
+
   # Thin wrapper around a Book in a BookSet to add helper methods relating to
   # its position in the graph.
   class BookProxy

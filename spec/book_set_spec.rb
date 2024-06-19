@@ -9,6 +9,10 @@ RSpec.describe BookSet do
   let(:busy) { Book.new('Little Miss Busy') }
   let(:funny) { Book.new('Mr Funny') }
   let(:sunshine) { Book.new('Little Miss Sunshine') }
+  let(:brave) { Book.new('Mr Brave') }
+  let(:tickle) { Book.new('Mr Tickle') }
+  let(:tall) { Book.new('Mr Tall') }
+  let(:small) { Book.new('Little Miss Small') }
 
   describe '.construct' do
     it 'creates a new BookSet' do
@@ -72,9 +76,41 @@ RSpec.describe BookSet do
         set.add(funny, must_precede: greedy)
       end
     }
+    let(:cyclic_set) {
+      described_class.construct do |set|
+        set.add(greedy, must_precede: busy)
+        set.add(busy, must_precede: funny)
+        set.add(funny, must_precede: greedy)
+      end
+    }
 
     it 'collapses a directed graph into a flat list' do
       expect(directed_set.flat_order).to eq([funny, busy, greedy])
+    end
+
+    it 'collapses a cyclic graph into a flat list' do
+      expect(cyclic_set.flat_order).to eq([busy, funny, greedy])
+    end
+  end
+
+  describe '#cycles' do
+    let(:cyclic_set) {
+      described_class.construct do |set|
+        set.add(greedy, must_precede: busy)
+        set.add(busy, must_precede: funny)
+        set.add(funny, must_precede: greedy)
+
+        set.add(brave, must_precede: tickle)
+        set.add(tickle, must_precede: tall)
+        set.add(tall, must_precede: brave)
+
+        set.add(small)
+      end
+    }
+
+    it 'returns a list of the cycles' do
+      expect(cyclic_set.cycles).to eq([[busy, funny, greedy],
+                                       [tickle, tall, brave]])
     end
   end
 end
