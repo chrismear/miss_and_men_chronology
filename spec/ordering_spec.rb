@@ -63,4 +63,63 @@ RSpec.describe Ordering do
       )
     end
   end
+
+  context 'when there is a complex, multi-graph ordering' do
+    let(:greedy) {
+      Book.new(
+        'Mr Greedy',
+        characters: Character['Mr Greedy'],
+        changes: {
+          Character['Mr Greedy'] =>
+            Attribute[:fatness].changes(from: :fat, to: :thin)
+        }
+      )
+    }
+    let(:busy) {
+      Book.new(
+        'Little Miss Busy',
+        characters: Character['Mr Greedy'],
+        appearances: {
+          Character['Mr Greedy'] => Attribute[:fatness].is(:fat)
+        }
+      )
+    }
+    let(:nosy) {
+      Book.new(
+        'Mr Nosy',
+        characters: Character['Mr Nosy'],
+        changes: {
+          Character['Mr Nosy'] =>
+            Attribute[:nosiness].changes(from: :nosy, to: :not_nosy)
+        }
+      )
+    }
+    let(:twins) {
+      Book.new(
+        'Little Miss Twins',
+        characters: [
+          Character['Little Miss Twins 1'],
+          Character['Little Miss Twins 2'],
+          Character['Mr Nosy']
+        ],
+        appearances: {
+          Character['Mr Nosy'] => Attribute[:nosiness].is(:nosy)
+        }
+      )
+    }
+    let(:nosy_two) {
+      Book.new(
+        'Mr Nosy Part Two',
+        characters: Character['Mr Nosy'],
+        appearances: {
+          Character['Mr Nosy'] => Attribute[:nosiness].is(:nosy)
+        }
+      )
+    }
+
+    it 'finds two separate graphs' do
+      expect(described_class.new([greedy, busy, nosy, twins,
+                                  nosy_two]).order.size).to eq(2)
+    end
+  end
 end
