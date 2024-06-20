@@ -114,9 +114,9 @@ RSpec.describe Ordering do
     }
     let(:nosy) {
       Book.new(
-        'Mr Nosy',
+        'Mr Nosey',
         changes: {
-          Character['Mr Nosy'] =>
+          Character['Mr Nosey'] =>
             Attribute[:nosiness].changes(from: :nosy, to: :not_nosy)
         }
       )
@@ -125,15 +125,15 @@ RSpec.describe Ordering do
       Book.new(
         'Little Miss Twins',
         appearances: {
-          Character['Mr Nosy'] => Attribute[:nosiness].is(:nosy)
+          Character['Mr Nosey'] => Attribute[:nosiness].is(:nosy)
         }
       )
     }
     let(:nosy_two) {
       Book.new(
-        'Mr Nosy Part Two',
+        'Mr Nosey Part Two',
         appearances: {
-          Character['Mr Nosy'] => Attribute[:nosiness].is(:nosy)
+          Character['Mr Nosey'] => Attribute[:nosiness].is(:nosy)
         }
       )
     }
