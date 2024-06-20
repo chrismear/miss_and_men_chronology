@@ -1,11 +1,14 @@
 # Little Miss and Mr Men Chronology
 
-In the Little Miss and Mr Men series of books, it is common for a character in
-their titular book to fundamentally change something about themselves. For
-example, in the book _Mr Greedy_, Mr Greedy learns to eat less, and becomes thin
-instead of fat. However, in other books, the same characters appear as they were
-_before_ their change. This implies a chronological ordering of the entire book
-series, which is what this program aims to calculate.
+In the
+[Little Miss and Mr Men series of books](https://en.wikipedia.org/wiki/Mr._Men),
+it is common for a character in their titular book to fundamentally change
+something about themselves. For example, in the book
+[_Mr. Greedy_](https://en.wikipedia.org/wiki/List_of_Mr._Men#Mr._Greedy), Mr
+Greedy learns to eat less, and becomes thin instead of fat. However, in other
+books, the same characters appear as they were _before_ their change. This
+implies a chronological ordering of the entire book series, which is what this
+program aims to calculate.
 
 ![Graph of the Little Miss and Mr Men books](output/little-miss-and-mr-men-ordering.png)
 
