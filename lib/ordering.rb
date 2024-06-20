@@ -39,7 +39,8 @@ class Ordering
     @sets.each do |set|
       set.to_image(graph)
     end
-    graph.output(png: "output/#{filename}-#{Time.now.iso8601}.png")
+    timestamp = Time.now.strftime('%Y-%m-%d-%H-%M-%S')
+    graph.output(png: "output/#{filename}-#{timestamp}.png")
   end
 
   private
