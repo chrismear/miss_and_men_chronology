@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 # Represents one of the books in the series.
-# rubocop:todo Metrics/ClassLength
 class Book
   attr_accessor :title
 
@@ -137,4 +136,3 @@ class Book
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/CyclomaticComplexity
 end
-# rubocop:enable Metrics/ClassLength

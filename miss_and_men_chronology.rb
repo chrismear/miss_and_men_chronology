@@ -46,7 +46,7 @@ books.push Book.new(
     Character['Mr Sneeze'] => Attribute[:sneeziness].is(:sneezy),
     Character['Mr Small'] => Attribute[:size].is(:small),
     Character['Mr Jelly'] => Attribute[:bravery].is(:timid),
-    Character['Mr Topsy-Turvy'] => Attribute[:topsy_turviness].is(:topsy_turvy),
+    Character['Mr Topsy-Turvy'] => Attribute[:topsy_turviness].is(:topsy_turvy)
   }
 )
 books.push Book.new(
@@ -93,20 +93,30 @@ books.push Book.new(
 books.push Book.new(
   'Little Miss Magic',
   changes: {
-    Character['Mr Tickle'] => Attribute[:tickle_frequency].changes(from: :often, to: :once_a_day)
+    Character['Mr Tickle'] => Attribute[:tickle_frequency].changes(
+      from: :often, to: :once_a_day
+    )
   }
 )
 books.push Book.new(
   'Mr. Sneeze',
-  changes: { Character['Mr Sneeze'] => Attribute[:sneeziness].changes(from: :sneezy, to: :not_sneezy) }
+  changes: { Character['Mr Sneeze'] => Attribute[:sneeziness].changes(
+    from: :sneezy, to: :not_sneezy
+  ) }
 )
 books.push Book.new(
   'Little Miss Splendid',
-  appearances: { Character['Little Miss Splendid'] => Attribute[:splendidness].is(:splendid) }
+  appearances: {
+    Character['Little Miss Splendid'] =>
+      Attribute[:splendidness].is(:splendid)
+  }
 )
 books.push Book.new(
   'Little Miss Helpful',
-  appearances: { Character['Little Miss Helpful'] => Attribute[:helpfulness].is(:sort_of_helpful) }
+  appearances: {
+    Character['Little Miss Helpful'] =>
+      Attribute[:helpfulness].is(:sort_of_helpful)
+  }
 )
 books.push Book.new(
   'Mr. Worry',
@@ -114,12 +124,14 @@ books.push Book.new(
     Character['Mr Worry'] => Attribute[:anxiety].is(:anxious),
     Character['Mr Bump'] => Attribute[:clumsiness].is(:clumsy),
     Character['Mr Noisy'] => Attribute[:loudness].is(:loud),
-    Character['Mr Greedy'] => Attribute[:fatness].is(:fat),
+    Character['Mr Greedy'] => Attribute[:fatness].is(:fat)
   }
 )
 books.push Book.new(
   'Mr. Forgetful',
-  appearances: { Character['Mr Forgetful'] => Attribute[:forgetfulness].is(:forgetful) }
+  appearances: {
+    Character['Mr Forgetful'] => Attribute[:forgetfulness].is(:forgetful)
+  }
 )
 books.push Book.new(
   'Little Miss Somersault',
@@ -150,7 +162,9 @@ books.push Book.new(
 books.push Book.new(
   'Little Miss Naughty',
   changes: {
-    Character['Little Miss Naughty'] => Attribute[:naughtiness].changes(from: :naughty, to: :nice)
+    Character['Little Miss Naughty'] => Attribute[:naughtiness].changes(
+      from: :naughty, to: :nice
+    )
   },
   appearances: {
     Character['Mr Busy'] => Attribute[:busyness].is(:busy)
@@ -159,7 +173,8 @@ books.push Book.new(
 books.push Book.new(
   'Mr. Grumble',
   changes: {
-    Character['Mr Grumble'] => Attribute[:grumpiness].changes(from: :grumpy, to: :cheerful)
+    Character['Mr Grumble'] => Attribute[:grumpiness].changes(from: :grumpy,
+                                                              to: :cheerful)
   }
 )
 books.push Book.new(
@@ -170,7 +185,10 @@ books.push Book.new(
 )
 books.push Book.new(
   'Mr. Skinny',
-  changes: { Character['Mr Skinny'] => Attribute[:fatness].changes(from: :thin, to: :plumper) },
+  changes: {
+    Character['Mr Skinny'] =>
+      Attribute[:fatness].changes(from: :thin, to: :plumper)
+  },
   appearances: { Character['Mr Greedy'] => Attribute[:fatness].is(:fat) }
 )
 books.push Book.new(
@@ -179,15 +197,16 @@ books.push Book.new(
 books.push Book.new(
   'Mr. Bump',
   appearances: { Character['Mr Bump'] => Attribute[:clumsiness].is(:clumsy) },
-  changes: { Character['Mr Bump'] => Attribute[:employment].changes(from: :unemployed, to: :employed) }
+  changes: { Character['Mr Bump'] => Attribute[:employment].changes(
+    from: :unemployed, to: :employed
+  ) }
 )
 books.push Book.new(
   'Mr. Nosey and the big surprise',
   appearances: {
-     Character['Mr Nosey'] => Attribute[:noseyness].is(:nosey) ,
-     Character['Mr Mischief'] => Attribute[:mischievousness].is(:mischievous)
-    }
-
+    Character['Mr Nosey'] => Attribute[:noseyness].is(:nosey),
+    Character['Mr Mischief'] => Attribute[:mischievousness].is(:mischievous)
+  }
 )
 books.push Book.new(
   'All Different',
@@ -214,7 +233,9 @@ books.push Book.new(
 )
 books.push Book.new(
   'Mr. Topsy-Turvy',
-  appearances: { Character['Mr Topsy-Turvy'] => Attribute[:topsy_turviness].is(:topsy_turvy) }
+  appearances: {
+    Character['Mr Topsy-Turvy'] => Attribute[:topsy_turviness].is(:topsy_turvy)
+  }
 )
 books.push Book.new(
   'Mr. Funny',
@@ -222,7 +243,9 @@ books.push Book.new(
 )
 books.push Book.new(
   'Mr. Tickle',
-  appearances: { Character['Mr Tickle'] => Attribute[:tickle_frequency].is(:often) }
+  appearances: {
+    Character['Mr Tickle'] => Attribute[:tickle_frequency].is(:often)
+  }
 )
 
 Ordering.new(books).to_image('little-miss-and-mr-men-ordering')
