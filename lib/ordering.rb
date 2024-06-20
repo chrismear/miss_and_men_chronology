@@ -31,6 +31,11 @@ class Ordering
   def to_image(filename = 'order')
     order
     graph = GraphViz.new(:G, type: :digraph)
+    # Prefer a top-to-bottom layout
+    graph[:rankdir] = 'TB'
+    graph[:nodesep] = 1.0
+    graph[:ranksep] = 1.0
+
     @sets.each do |set|
       set.to_image(graph)
     end

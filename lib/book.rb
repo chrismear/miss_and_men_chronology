@@ -31,8 +31,7 @@ class Book
           next unless ends_with?(character, attribute, state)
 
           @explanations_for_preceding[potential_successor] <<
-            "#{title} must happen before #{potential_successor.title} " \
-            "because #{character.name} changes from #{state} to " \
+            "#{character.name} changes from #{state} to " \
             "#{potential_successor.changes[character].find { |c|
                  c.from == state
                }.to} in " \
@@ -52,8 +51,7 @@ class Book
                                                        state)
 
           @explanations_for_preceding[potential_successor] <<
-            "#{title} must happen before #{potential_successor.title} " \
-            "because #{character.name} changes from " \
+            "#{character.name} changes from " \
             "#{changes[character].find { |c| c.to == state }.from} to " \
             "#{state} in #{title}, and appears as #{state} in " \
             "#{potential_successor.title}."

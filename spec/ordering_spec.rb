@@ -58,7 +58,7 @@ RSpec.describe Ordering do
 
     it 'explains the ordering' do
       expect(described_class.new(books).explanations).to include(
-        'Little Miss Busy must happen before Mr Greedy because Mr Greedy ' \
+        'Mr Greedy ' \
         'changes from fat to thin in Mr Greedy, but appears as fat in ' \
         'Little Miss Busy.'
       )
