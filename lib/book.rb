@@ -30,11 +30,11 @@ class Book
           next unless ends_with?(character, attribute, state)
 
           @explanations_for_preceding[potential_successor] <<
-            "#{character.name} changes from #{state} to " \
+            "#{character.name} changes from\n#{state} to " \
             "#{potential_successor.changes[character].find { |c|
                  c.from == state
-               }.to} in " \
-            "#{potential_successor.title}, but appears as #{state} in " \
+               }.to} in\n" \
+            "#{potential_successor.title}, but appears as\n#{state} in " \
             "#{title}."
           return true
         end
@@ -50,9 +50,9 @@ class Book
                                                        state)
 
           @explanations_for_preceding[potential_successor] <<
-            "#{character.name} changes from " \
+            "#{character.name} changes from\n" \
             "#{changes[character].find { |c| c.to == state }.from} to " \
-            "#{state} in #{title}, and appears as #{state} in " \
+            "#{state} in\n#{title}, and appears as\n#{state} in " \
             "#{potential_successor.title}."
           return true
         end
