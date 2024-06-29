@@ -289,5 +289,6 @@ books.push Book.new(
     Character['Mr Perfect'] => Attribute[:naughtiness].is(:nice)
   }
 )
+books.push Book.new("Mr. Bounce's Bouncy Day")
 
 Ordering.new(books).to_image('little-miss-and-mr-men-ordering')
